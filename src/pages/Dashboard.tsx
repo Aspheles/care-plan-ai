@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import Loading from '../components/ui/Loading';
 import useClientData from '../hooks/useClientData';
+import { IoMdPersonAdd } from 'react-icons/io';
+import Button from '../components/ui/Button';
 
 export default function Dashboard() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
@@ -22,9 +24,11 @@ export default function Dashboard() {
       <h1 className='text-2xl font-bold mb-4'>Zorgplannen</h1>
 
       <Link to={'/generate-page'}>
-        <button className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg mb-4 cursor-pointer'>
-          + Nieuw client
-        </button>
+        <Button className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg mb-4 cursor-pointer'>
+          <span className='flex justify-center items-center'>
+            <IoMdPersonAdd size={30} className='mr-2' /> Nieuw Client
+          </span>
+        </Button>
       </Link>
 
       {isLoading && (

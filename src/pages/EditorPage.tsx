@@ -6,6 +6,7 @@ import type { Client, FormData } from '../types/interface';
 import React, { useState } from 'react';
 import Loading from '../components/ui/Loading';
 import useClientData from '../hooks/useClientData';
+import { MdDeleteOutline, MdOutlineAddCircle } from 'react-icons/md';
 
 interface EditorProps {
   onBack: () => void;
@@ -158,11 +159,10 @@ export function Editor({ onBack, client }: EditorProps) {
                 {formData.plan.interventions.map((item) => (
                   <div
                     key={item.id}
-                    className='flex justify-center justify-items-center'
+                    className='flex items-center gap-3 mt-2 w-full'
                   >
                     <Editable
                       name='intervention'
-                      className='mt-2'
                       value={item.description}
                       onChange={(event) =>
                         handleInterventionChange(item.id, event.target.value)
@@ -171,20 +171,24 @@ export function Editor({ onBack, client }: EditorProps) {
 
                     <Button
                       onClick={() => removeIntervention(item.id)}
-                      className='text-red-600 m-2 p-2 cursor-pointer font-bold'
                       type='button'
+                      className='p-2 bg-red-500 text-white hover:scale-125 transition-transform duration-150 cursor-pointer'
                     >
-                      X
+                      <span>
+                        <MdDeleteOutline size={23} />
+                      </span>
                     </Button>
                   </div>
                 ))}
 
                 <Button
                   onClick={addIntervention}
-                  className='cursor-pointer bg-green-600 text-primary mt-2 p-2 text-white'
+                  className='cursor-pointer bg-blue-500 text-primary mt-4 ml-1 p-2 text-white hover:scale-125 transition duration-300'
                   type={'button'}
                 >
-                  Add
+                  <span>
+                    <MdOutlineAddCircle size={25} />
+                  </span>
                 </Button>
               </Section>
 
@@ -204,7 +208,7 @@ export function Editor({ onBack, client }: EditorProps) {
               <div className='fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex gap-2'>
                 <Button
                   onClick={generateClientPlan}
-                  className='flex-1 bg-gray-400 p-3 rounded-xl text-white cursor-pointer'
+                  className='flex-1 bg-gray-500 p-3 rounded-xl text-white cursor-pointer'
                   type={'button'}
                 >
                   Opnieuw
