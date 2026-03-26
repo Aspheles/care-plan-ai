@@ -1,5 +1,5 @@
 export interface Intervention {
-  id: string;
+  id: number;
   description: string;
 }
 

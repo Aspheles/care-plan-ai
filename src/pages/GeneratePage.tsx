@@ -41,7 +41,7 @@ export default function GeneratePage() {
               onChange={(e) =>
                 setCurrentClient({
                   ...currentClient,
-                  id: 9999,
+                  id: Math.floor(Math.random() * 10000),
                   name: e.target.value,
                   status: 'Concept',
                   plan: null,

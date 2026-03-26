@@ -16,6 +16,7 @@ interface EditorProps {
 export function Editor({ onBack, client }: EditorProps) {
   const { plan, isLoading } = usePlanData();
   const [loading, setLoading] = useState<boolean>(false);
+
   const { addClientPlan } = useClientData();
 
   const [formData, setFormData] = useState<FormData>({
@@ -23,29 +24,34 @@ export function Editor({ onBack, client }: EditorProps) {
     plan: { id: 0, problem: '', goal: '', interventions: [], evaluation: '' },
   });
 
-  const generateClientPlan = () => {
+  const generateClientPlan = async () => {
     if (!plan) return;
 
-    //To replicate api fetching
     setLoading(true);
+
     setFormData({
       name: client.name,
-      plan: plan,
+      plan: client.plan ?? plan,
     });
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    await new Promise((res) => setTimeout(res, 2000));
+
+    setLoading(false);
   };
+
+  if (!formData.name && plan && !loading && client) {
+    generateClientPlan();
+  }
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     addClientPlan(client.id, { ...formData.plan });
-    console.log(client);
+
+    onBack();
   };
 
-  const handleInterventionChange = (id: string, value: string) => {
+  const handleInterventionChange = (id: number, value: string) => {
     setFormData((prevState) => ({
       ...prevState,
       plan: {
@@ -68,7 +74,7 @@ export function Editor({ onBack, client }: EditorProps) {
           interventions: [
             ...prevState.plan.interventions,
             {
-              id: `intervention-${Math.floor(Math.random() * 1000)}`,
+              id: Math.floor(Math.random() * 1000),
               description: '',
             },
           ],
@@ -77,7 +83,7 @@ export function Editor({ onBack, client }: EditorProps) {
     });
   };
 
-  const removeIntervention = (id: string) => {
+  const removeIntervention = (id: number) => {
     if (!id) return;
 
     setFormData((prevState) => {

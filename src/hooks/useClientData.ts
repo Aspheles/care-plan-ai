@@ -22,7 +22,7 @@ const useClientData = () => {
     queryClient.setQueryData(['clients'], (prevState: Client[] = []) => [
       ...prevState,
       {
-        id: `client-${Math.floor(Math.random() * 10000)}`,
+        id: Math.floor(Math.random() * 10000),
         name: client.name,
         status: client.status,
         plan: client.plan,
@@ -30,23 +30,32 @@ const useClientData = () => {
     ]);
   };
 
+  const getClientById = (clientId: number) => {
+    if (!clientId || !clients) return;
+
+    return clients.find((client) => client.id === clientId);
+  };
+
   const addClientPlan = (clientId: number, plan: Plan) => {
     queryClient.setQueryData<Client[]>(['clients'], (prevState) => {
-      if (!prevState) return;
-
-      console.log(
-        'found client: ',
-        prevState.find((client) => client.id === clientId)?.name,
-      );
-      console.log('adding the plan:', plan);
+      if (!prevState) return prevState;
 
       return prevState.map((client) =>
-        client.id === clientId ? { ...client, plan: plan } : client,
+        client.id === clientId
+          ? { ...client, plan: plan, status: 'Goedgekeurd' }
+          : client,
       );
     });
   };
 
-  return { clients, isLoading, isFetching, addClient, addClientPlan };
+  return {
+    clients,
+    isLoading,
+    isFetching,
+    addClient,
+    addClientPlan,
+    getClientById,
+  };
 };
 
 export default useClientData;
