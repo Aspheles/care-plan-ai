@@ -110,7 +110,7 @@ export function Editor({ onBack, client }: EditorProps) {
           <Button
             type={'button'}
             className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg cursor-pointer'
-            onClick={generateClientPlan}
+            onClick={() => generateClientPlan()}
           >
             Genereer zorgplan
           </Button>
