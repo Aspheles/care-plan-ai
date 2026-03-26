@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useClientData from '../hooks/useClientData';
 import Loading from '../components/ui/Loading';
-import type { Client } from '../types/carePlan';
+import type { Client } from '../types/interface';
 
 export default function GeneratePage() {
   const [isSaving, setIsSaving] = useState(false);
@@ -51,7 +51,12 @@ export default function GeneratePage() {
           </Section>
 
           <Section title='Client Geboorte Datum'>
-            <Editable className='mt-2' value='' type='date'></Editable>
+            <Editable
+              name='birthdate'
+              className='mt-2'
+              value=''
+              type='date'
+            ></Editable>
           </Section>
 
           <button
