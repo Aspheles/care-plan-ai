@@ -1,20 +1,26 @@
-import { useState } from 'react';
-
 interface editbaleProps {
   placeholder?: string;
   value: string;
   className?: string;
   type?: string;
-  onChange?: () => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
 }
 
-function Editable({ value, className, placeholder, type }: editbaleProps) {
-  const [text, setText] = useState(value);
+function Editable({
+  className,
+  placeholder,
+  type,
+  onChange,
+  value,
+  name,
+}: editbaleProps) {
   return (
     <input
       className={`w-full border rounded-xl p-2 ${className}`}
-      value={text}
-      onChange={(e) => setText(e.target.value)}
+      name={name}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
       type={type}
     />
