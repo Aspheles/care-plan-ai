@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Editor } from './EditorPage';
-import type { Client } from '../types/carePlan';
+import type { Client } from '../types/interface';
 import { Link } from 'react-router-dom';
 
 import Loading from '../components/ui/Loading';
 import useClientData from '../hooks/useClientData';
 
 export default function Dashboard() {
-  // const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   const { clients, isLoading } = useClientData();
@@ -16,10 +15,6 @@ export default function Dashboard() {
     return (
       <Editor onBack={() => setSelectedClient(null)} client={selectedClient} />
     );
-  }
-
-  if (!clients && !isLoading) {
-    return <p>No Clients found</p>;
   }
 
   return (
@@ -38,6 +33,8 @@ export default function Dashboard() {
           <Loading />
         </div>
       )}
+
+      {!clients && !isLoading && <p>No Clients found</p>}
 
       {!isLoading && clients && (
         <div className='space-y-3'>
