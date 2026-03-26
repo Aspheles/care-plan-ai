@@ -1,8 +1,11 @@
-import { useCarePlan } from '../hooks/useCarePlan';
+import { usePlanData } from '../hooks/usePlanData';
 import Editable from '../components/Editable';
 import Section from '../components/Section';
 import Button from '../components/ui/Button';
-import type { Client } from '../types/carePlan';
+import type { Client, FormData } from '../types/interface';
+import React, { useState } from 'react';
+import Loading from '../components/ui/Loading';
+import useClientData from '../hooks/useClientData';
 
 interface EditorProps {
   onBack: () => void;
@@ -10,13 +13,85 @@ interface EditorProps {
 }
 
 export function Editor({ onBack, client }: EditorProps) {
-  const {
-    localPlan,
-    isLoading,
-    isFetching,
-    removeIntervention,
-    addIntervention,
-  } = useCarePlan();
+  const { plan, isLoading } = usePlanData();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { addClientPlan } = useClientData();
+
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    plan: { id: 0, problem: '', goal: '', interventions: [], evaluation: '' },
+  });
+
+  const generateClientPlan = () => {
+    if (!plan) return;
+
+    //To replicate api fetching
+    setLoading(true);
+    setFormData({
+      name: client.name,
+      plan: plan,
+    });
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    addClientPlan(client.id, { ...formData.plan });
+    console.log(client);
+  };
+
+  const handleInterventionChange = (id: string, value: string) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      plan: {
+        ...prevState.plan,
+        interventions: prevState.plan.interventions.map((item) =>
+          item.id === id ? { ...item, description: value } : item,
+        ),
+      },
+    }));
+  };
+
+  const addIntervention = () => {
+    setFormData((prevState) => {
+      if (!prevState) return prevState;
+
+      return {
+        ...prevState,
+        plan: {
+          ...prevState.plan,
+          interventions: [
+            ...prevState.plan.interventions,
+            {
+              id: `intervention-${Math.floor(Math.random() * 1000)}`,
+              description: '',
+            },
+          ],
+        },
+      };
+    });
+  };
+
+  const removeIntervention = (id: string) => {
+    if (!id) return;
+
+    setFormData((prevState) => {
+      if (!prevState) return prevState;
+      return {
+        ...prevState,
+        plan: {
+          ...prevState.plan,
+          interventions: prevState.plan.interventions.filter(
+            (i) => i.id !== id,
+          ),
+        },
+      };
+    });
+  };
 
   return (
     <div className='min-h-screen bg-gray-50 p-4'>
@@ -29,63 +104,122 @@ export function Editor({ onBack, client }: EditorProps) {
         AI voorstel — controleer en pas aan
       </p>
 
-      {!localPlan && !isLoading && !isFetching && (
-        <button className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg cursor-pointer'>
-          Genereer zorgplan
-        </button>
-      )}
-
-      {isLoading && (
-        <div className='mt-10 text-center'>
-          <p className='text-lg'>Zorgplan wordt opgesteld...</p>
+      {!formData.name && (
+        <div className=''>
+          <Button
+            type={'button'}
+            className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg cursor-pointer'
+            onClick={generateClientPlan}
+          >
+            Genereer zorgplan
+          </Button>
         </div>
       )}
 
-      {localPlan && (
-        <div className='space-y-4'>
-          <Section title='Probleem'>
-            <Editable value={localPlan.problem} />
-          </Section>
+      <>
+        {loading && (
+          <div className='mt-10 text-center'>
+            <p className='text-lg'>Zorgplan wordt opgesteld...</p>
+            <Loading />
+          </div>
+        )}
 
-          <Section title='Doel'>
-            <Editable value={localPlan.goal} />
-          </Section>
+        {plan && formData.name && !isLoading && !loading && (
+          <div className='space-y-4'>
+            <form onSubmit={handleSubmit}>
+              <Section title='Probleem'>
+                <Editable
+                  onChange={(event) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      plan: { ...prev.plan, problem: event.target.value },
+                    }));
+                  }}
+                  name='problem'
+                  value={formData.plan.problem}
+                  type='text'
+                />
+              </Section>
 
-          <Section title='Interventies'>
-            {localPlan.interventions.map((item, i) => (
-              <div className='flex justify-center justify-items-center'>
-                <Editable className='mt-2' key={i} value={item.description} />
+              <Section title='Doel'>
+                <Editable
+                  onChange={(event) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      plan: { ...prev.plan, goal: event.target.value },
+                    }));
+                  }}
+                  name='goal'
+                  value={formData.plan.goal}
+                />
+              </Section>
+
+              <Section title='Interventies'>
+                {formData.plan.interventions.map((item) => (
+                  <div
+                    key={item.id}
+                    className='flex justify-center justify-items-center'
+                  >
+                    <Editable
+                      name='intervention'
+                      className='mt-2'
+                      value={item.description}
+                      onChange={(event) =>
+                        handleInterventionChange(item.id, event.target.value)
+                      }
+                    />
+
+                    <Button
+                      onClick={() => removeIntervention(item.id)}
+                      className='text-red-600 m-2 p-2 cursor-pointer font-bold'
+                      type='button'
+                    >
+                      X
+                    </Button>
+                  </div>
+                ))}
+
                 <Button
-                  onClick={() => removeIntervention(item.id)}
-                  className='text-red-600 m-2 p-2 cursor-pointer font-bold'
+                  onClick={addIntervention}
+                  className='cursor-pointer bg-green-600 text-primary mt-2 p-2 text-white'
+                  type={'button'}
                 >
-                  X
+                  Add
+                </Button>
+              </Section>
+
+              <Section title='Evaluatie'>
+                <Editable
+                  onChange={(event) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      plan: { ...prev.plan, evaluation: event.target.value },
+                    }));
+                  }}
+                  name={'evaluation'}
+                  value={formData.plan.evaluation}
+                />
+              </Section>
+
+              <div className='fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex gap-2'>
+                <Button
+                  onClick={generateClientPlan}
+                  className='flex-1 bg-gray-400 p-3 rounded-xl text-white cursor-pointer'
+                  type={'button'}
+                >
+                  Opnieuw
+                </Button>
+                <Button
+                  type={'submit'}
+                  className='cursor-pointer bg-green-600 text-primary text-white'
+                >
+                  Goedkeuren
                 </Button>
               </div>
-            ))}
-
-            <Button
-              onClick={addIntervention}
-              className='cursor-pointer bg-green-600 text-primary mt-2 p-2 text-white'
-            >
-              Add
-            </Button>
-          </Section>
-
-          <Section title='Evaluatie'>
-            <Editable value={localPlan.evaluation} />
-          </Section>
-
-          <div className='fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex gap-2'>
-            <Button className='flex-1 bg-gray-400 p-3 rounded-xl text-white cursor-pointer'>
-              Opnieuw
-            </Button>
-            <Button className='cursor-pointer bg-green-600 text-primary text-white'>
-              Goedkeuren
-            </Button>
+            </form>
           </div>
-        </div>
-      )}
+        )}
+      </>
     </div>
   );
 }

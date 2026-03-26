@@ -1,48 +1,6 @@
 import { generateFakeClients } from '../services/fakeApi';
-import type { Client } from '../types/carePlan';
+import type { Client, Plan } from '../types/interface';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-
-// const useClientData = () => {
-//   const [clients, setClients] = useState<Client[] | null>(null);
-//   const [isLoading, setIsLoading] = useState(false);
-
-//   const fetchClients = async () => {
-//     setIsLoading(true);
-
-//     try {
-//       const data = (await generateFakeClients()) as Client[];
-//       setClients(data);
-//     } catch (error) {
-//       console.log(error);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const addClient = () => {
-//     if (!clients) return;
-//     const copyArray = [...clients];
-
-//     console.log(copyArray);
-
-//     copyArray.push({ id: 99, name: 'testing', status: 'error', plan: null });
-
-//     console.log(copyArray);
-
-//     setClients(copyArray);
-//     // setClients((prevState) => {
-//     //   if (!prevState) return prevState;
-
-//     //   return copyArray;
-//     // });
-//   };
-
-//   useEffect(() => {
-//     fetchClients();
-//   }, []);
-
-//   return { clients, isLoading, addClient };
-// };
 
 const useClientData = () => {
   const queryClient = useQueryClient();
@@ -61,8 +19,8 @@ const useClientData = () => {
   });
 
   const addClient = (client: Client) => {
-    queryClient.setQueryData(['clients'], (old: Client[] = []) => [
-      ...old,
+    queryClient.setQueryData(['clients'], (prevState: Client[] = []) => [
+      ...prevState,
       {
         id: `client-${Math.floor(Math.random() * 10000)}`,
         name: client.name,
@@ -72,7 +30,23 @@ const useClientData = () => {
     ]);
   };
 
-  return { clients, isLoading, isFetching, addClient };
+  const addClientPlan = (clientId: number, plan: Plan) => {
+    queryClient.setQueryData<Client[]>(['clients'], (prevState) => {
+      if (!prevState) return;
+
+      console.log(
+        'found client: ',
+        prevState.find((client) => client.id === clientId)?.name,
+      );
+      console.log('adding the plan:', plan);
+
+      return prevState.map((client) =>
+        client.id === clientId ? { ...client, plan: plan } : client,
+      );
+    });
+  };
+
+  return { clients, isLoading, isFetching, addClient, addClientPlan };
 };
 
 export default useClientData;

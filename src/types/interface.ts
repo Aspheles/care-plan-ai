@@ -20,9 +20,5 @@ export interface Client {
 
 export interface FormData {
   name: string;
-  // problem: string;
-  // goal: string;
-  // intervention: Intervention[];
-  // evalation: string;
   plan: Plan;
 }
