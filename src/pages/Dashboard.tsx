@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { Editor } from './EditorPage';
 import type { Client } from '../types/interface';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Loading from '../components/ui/Loading';
 import useClientData from '../hooks/useClientData';
-import { IoMdPersonAdd } from 'react-icons/io';
+import { IoMdPersonAdd, IoMdLogOut } from 'react-icons/io';
 import Button from '../components/ui/Button';
 
 export default function Dashboard() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   const { clients, isLoading } = useClientData();
+  const navigate = useNavigate();
 
   if (selectedClient) {
     return (
@@ -24,7 +25,7 @@ export default function Dashboard() {
       <h1 className='text-2xl font-bold mb-4'>Zorgplannen</h1>
 
       <Link to={'/generate-page'}>
-        <Button className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg mb-4 cursor-pointer'>
+        <Button className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg mb-4 cursor-pointer hover:bg-blue-500'>
           <span className='flex justify-center items-center'>
             <IoMdPersonAdd size={30} className='mr-2' /> Nieuw Client
           </span>
@@ -67,6 +68,16 @@ export default function Dashboard() {
           ))}
         </div>
       )}
+
+      <div className='fixed bottom-0 right-0 m-2'>
+        <Button
+          onClick={() => navigate('/')}
+          className='flex items-center gap-2 bg-gray-500 text-white p-3 rounded-xl hover:bg-gray-600 transition cursor-pointer'
+        >
+          <IoMdLogOut size={20} />
+          Uitloggen
+        </Button>
+      </div>
     </div>
   );
 }
