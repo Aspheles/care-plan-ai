@@ -25,14 +25,14 @@ export function Editor({ onBack, client }: EditorProps) {
     plan: { id: 0, problem: '', goal: '', interventions: [], evaluation: '' },
   });
 
-  const generateClientPlan = async () => {
+  const generateClientPlan = async (newFetch: boolean = false) => {
     if (!plan) return;
 
     setLoading(true);
 
     setFormData({
       name: client.name,
-      plan: client.plan ?? plan,
+      plan: client.plan && !newFetch ? client.plan : plan,
     });
 
     setLoadingText(
@@ -114,9 +114,9 @@ export function Editor({ onBack, client }: EditorProps) {
 
   return (
     <div className='min-h-screen bg-gray-50 p-4'>
-      <button onClick={onBack} className='mb-4 text-blue-600 cursor-pointer'>
+      <Button onClick={onBack} className='mb-4 text-blue-600 cursor-pointer'>
         ← Terug
-      </button>
+      </Button>
 
       <h1 className='text-xl font-bold mb-2'>{client.name}</h1>
       <p className='text-sm text-gray-500 mb-4'>
@@ -224,7 +224,7 @@ export function Editor({ onBack, client }: EditorProps) {
 
               <div className='fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex gap-2'>
                 <Button
-                  onClick={generateClientPlan}
+                  onClick={() => generateClientPlan(true)}
                   className='flex-1 bg-gray-500 p-3 rounded-xl text-white cursor-pointer'
                   type={'button'}
                 >
