@@ -50,8 +50,13 @@ export function Editor({ onBack, client }: EditorProps) {
     generateClientPlan();
   }
 
-  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setLoading(true);
+    setLoadingText('Client informatie wordt opgeslagen...');
+
+    await new Promise((res) => setTimeout(res, 2000));
 
     addClientPlan(client.id, { ...formData.plan });
 
@@ -132,9 +137,8 @@ export function Editor({ onBack, client }: EditorProps) {
 
       <>
         {loading && (
-          <div className='mt-10 text-center'>
-            <p className='text-lg'>{loadingText}</p>
-            <Loading />
+          <div className='mt-10'>
+            <Loading text={loadingText} />
           </div>
         )}
 
