@@ -46,7 +46,8 @@ export function Editor({ onBack, client }: EditorProps) {
     setLoading(false);
   };
 
-  if (!formData.name && plan && !loading && client) {
+  // If client already has a plan data we initialize it
+  if (client.plan && !formData.name) {
     generateClientPlan();
   }
 
@@ -114,7 +115,13 @@ export function Editor({ onBack, client }: EditorProps) {
 
   return (
     <div className='min-h-screen bg-gray-50 p-4'>
-      <Button onClick={onBack} className='mb-4 text-blue-600 cursor-pointer'>
+      <Button
+        onClick={() => {
+          onBack();
+          setFormData((prev) => ({ ...prev, name: '' }));
+        }}
+        className='mb-4 text-blue-600 cursor-pointer'
+      >
         ← Terug
       </Button>
 
@@ -123,7 +130,7 @@ export function Editor({ onBack, client }: EditorProps) {
         AI voorstel — controleer en pas aan
       </p>
 
-      {!formData.name && (
+      {!formData.name && !loading && (
         <div className=''>
           <Button
             type={'button'}
@@ -142,7 +149,7 @@ export function Editor({ onBack, client }: EditorProps) {
           </div>
         )}
 
-        {plan && formData.name && !isLoading && !loading && (
+        {formData.name && !isLoading && !loading && (
           <div className='space-y-4'>
             <form onSubmit={handleSubmit}>
               <Section title='Probleem'>
