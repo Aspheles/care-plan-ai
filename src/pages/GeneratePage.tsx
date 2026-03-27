@@ -84,9 +84,8 @@ export default function GeneratePage() {
           )}
 
           {isSaving && (
-            <div className='py-10 text-center'>
-              <p className='text-lg mb-2'>Client wordt opgeslagen...</p>
-              <Loading />
+            <div className='py-10'>
+              <Loading text='Client wordt opgeslagen...' />
             </div>
           )}
         </div>

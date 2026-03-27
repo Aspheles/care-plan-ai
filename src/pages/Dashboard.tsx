@@ -34,8 +34,7 @@ export default function Dashboard() {
 
       {isLoading && (
         <div className='mt-10 text-center'>
-          <p className='text-lg'>Client data wordt opgehaald...</p>
-          <Loading />
+          <Loading text='Client data wordt opgehaald...' />
         </div>
       )}
 

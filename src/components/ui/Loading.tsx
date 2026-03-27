@@ -1,18 +1,26 @@
 import { Oval } from 'react-loader-spinner';
 
-const Loading = () => {
+interface LoadingProps {
+  text: string;
+}
+
+const Loading = ({ text }: LoadingProps) => {
   return (
-    <div className='flex justify-center mt-2'>
-      <Oval
-        height={70}
-        width={70}
-        color='blue'
-        visible={true}
-        ariaLabel='oval-loading'
-        secondaryColor='blue'
-        strokeWidth={2}
-        strokeWidthSecondary={2}
-      />
+    <div className='flex justify-center items-center text-center flex-col mt-4'>
+      <p className='text-lg font-semibold'>{text}</p>
+
+      <div className='mt-4'>
+        <Oval
+          height={70}
+          width={70}
+          color='#ffff'
+          visible={true}
+          ariaLabel='oval-loading'
+          secondaryColor='#1D4ED8'
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
     </div>
   );
 };
