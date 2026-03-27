@@ -18,14 +18,14 @@ const useClientData = () => {
     refetchOnWindowFocus: false,
   });
 
-  const addClient = (client: Client) => {
+  const addClient = ({ name, status, plan }: Client) => {
     queryClient.setQueryData(['clients'], (prevState: Client[] = []) => [
       ...prevState,
       {
         id: Math.floor(Math.random() * 10000),
-        name: client.name,
-        status: client.status,
-        plan: client.plan,
+        name: name,
+        status: status,
+        plan: plan,
       },
     ]);
   };

@@ -30,7 +30,7 @@ export default function GeneratePage() {
 
     await new Promise((res) => setTimeout(res, 2000));
 
-    addClient(currentClient);
+    addClient({ ...currentClient });
     navigate('/dashboard');
   };
 
@@ -67,9 +67,7 @@ export default function GeneratePage() {
                     onChange={(e) =>
                       setCurrentClient({
                         ...currentClient,
-                        id:
-                          currentClient?.id ??
-                          Math.floor(Math.random() * 10000),
+                        id: Math.floor(Math.random() * 10000),
                         name: e.target.value,
                         status: 'Concept',
                         plan: null,
