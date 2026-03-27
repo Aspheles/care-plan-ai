@@ -30,12 +30,6 @@ const useClientData = () => {
     ]);
   };
 
-  const getClientById = (clientId: number) => {
-    if (!clientId || !clients) return;
-
-    return clients.find((client) => client.id === clientId);
-  };
-
   const addClientPlan = (clientId: number, plan: Plan) => {
     queryClient.setQueryData<Client[]>(['clients'], (prevState) => {
       if (!prevState) return prevState;
@@ -54,7 +48,6 @@ const useClientData = () => {
     isFetching,
     addClient,
     addClientPlan,
-    getClientById,
   };
 };
 
