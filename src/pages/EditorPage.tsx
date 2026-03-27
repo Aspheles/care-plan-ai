@@ -16,6 +16,7 @@ interface EditorProps {
 export function Editor({ onBack, client }: EditorProps) {
   const { plan, isLoading } = usePlanData();
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingText, setLoadingText] = useState<string>('');
 
   const { addClientPlan } = useClientData();
 
@@ -33,6 +34,12 @@ export function Editor({ onBack, client }: EditorProps) {
       name: client.name,
       plan: client.plan ?? plan,
     });
+
+    setLoadingText(
+      client.plan
+        ? 'Zorgplan wordt opgehaald...'
+        : 'Zorgplan wordt opgesteld...',
+    );
 
     await new Promise((res) => setTimeout(res, 2000));
 
@@ -126,7 +133,7 @@ export function Editor({ onBack, client }: EditorProps) {
       <>
         {loading && (
           <div className='mt-10 text-center'>
-            <p className='text-lg'>Zorgplan wordt opgesteld...</p>
+            <p className='text-lg'>{loadingText}</p>
             <Loading />
           </div>
         )}
