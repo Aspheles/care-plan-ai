@@ -10,16 +10,28 @@ import Button from '../components/ui/Button';
 export default function GeneratePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [currentClient, setCurrentClient] = useState<Client | null>(null);
+  const [error, setError] = useState({ state: false, text: '' });
   const navigate = useNavigate();
   const { addClient } = useClientData();
 
-  const saveClient = () => {
-    if (!currentClient) return;
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!currentClient?.name) {
+      setError({
+        state: true,
+        text: 'Naam moet langer zijn dan 3 tekens.',
+      });
+
+      return;
+    }
+
     setIsSaving(true);
-    setTimeout(() => {
-      addClient(currentClient);
-      navigate('/dashboard');
-    }, 2000);
+
+    await new Promise((res) => setTimeout(res, 2000));
+
+    addClient(currentClient);
+    navigate('/dashboard');
   };
 
   return (
@@ -39,12 +51,15 @@ export default function GeneratePage() {
 
         <div className='bg-white rounded-2xl shadow-sm'>
           {!isSaving && (
-            <>
+            <form onSubmit={handleSubmit}>
               <Section title='Algemene gegevens'>
                 <div>
                   <label className='text-sm text-gray-500'>
                     Volledige naam
                   </label>
+                  {error.state && (
+                    <p className='text-red-400 mt-1'>* {error.text}</p>
+                  )}
                   <Editable
                     name='name'
                     className='w-full border border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -75,12 +90,12 @@ export default function GeneratePage() {
               </Section>
 
               <Button
-                onClick={saveClient}
+                type={'submit'}
                 className='w-full bg-blue-600 text-white p-4 mt-4 rounded-2xl text-lg cursor-pointer hover:bg-blue-500 transition'
               >
                 Opslaan
               </Button>
-            </>
+            </form>
           )}
 
           {isSaving && (
