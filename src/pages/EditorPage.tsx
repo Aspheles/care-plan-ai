@@ -1,12 +1,10 @@
 import { usePlanData } from '../hooks/usePlanData';
-import Editable from '../components/Editable';
-import Section from '../components/Section';
 import Button from '../components/ui/Button';
 import type { Client, FormData } from '../types/interface';
 import React, { useState } from 'react';
-import Loading from '../components/ui/Loading';
+import Loading from '../components/ui/LoadingState';
 import useClientData from '../hooks/useClientData';
-import { MdDeleteOutline, MdOutlineAddCircle } from 'react-icons/md';
+import ClientForm from '../components/client/ClientForm';
 
 interface EditorProps {
   onBack: () => void;
@@ -46,6 +44,19 @@ export function Editor({ onBack, client }: EditorProps) {
     setLoading(false);
   };
 
+  const updateFormData = <K extends keyof FormData['plan']>(
+    field: K,
+    value: FormData['plan'][K],
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      plan: {
+        ...prev.plan,
+        [field]: value,
+      },
+    }));
+  };
+
   // If client already has a plan data we initialize it
   if (client.plan && !formData.name) {
     generateClientPlan();
@@ -64,57 +75,8 @@ export function Editor({ onBack, client }: EditorProps) {
     onBack();
   };
 
-  const handleInterventionChange = (id: number, value: string) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      plan: {
-        ...prevState.plan,
-        interventions: prevState.plan.interventions.map((item) =>
-          item.id === id ? { ...item, description: value } : item,
-        ),
-      },
-    }));
-  };
-
-  const addIntervention = () => {
-    setFormData((prevState) => {
-      if (!prevState) return prevState;
-
-      return {
-        ...prevState,
-        plan: {
-          ...prevState.plan,
-          interventions: [
-            ...prevState.plan.interventions,
-            {
-              id: Math.floor(Math.random() * 1000),
-              description: '',
-            },
-          ],
-        },
-      };
-    });
-  };
-
-  const removeIntervention = (id: number) => {
-    if (!id) return;
-
-    setFormData((prevState) => {
-      if (!prevState) return prevState;
-      return {
-        ...prevState,
-        plan: {
-          ...prevState.plan,
-          interventions: prevState.plan.interventions.filter(
-            (i) => i.id !== id,
-          ),
-        },
-      };
-    });
-  };
-
   return (
-    <div className='min-h-screen bg-gray-50 p-4'>
+    <>
       <Button
         onClick={() => {
           onBack();
@@ -151,103 +113,15 @@ export function Editor({ onBack, client }: EditorProps) {
 
         {formData.name && !isLoading && !loading && (
           <div className='space-y-4'>
-            <form onSubmit={handleSubmit}>
-              <Section title='Probleem'>
-                <Editable
-                  onChange={(event) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      plan: { ...prev.plan, problem: event.target.value },
-                    }));
-                  }}
-                  name='problem'
-                  value={formData.plan.problem}
-                  type='text'
-                />
-              </Section>
-
-              <Section title='Doel'>
-                <Editable
-                  onChange={(event) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      plan: { ...prev.plan, goal: event.target.value },
-                    }));
-                  }}
-                  name='goal'
-                  value={formData.plan.goal}
-                />
-              </Section>
-
-              <Section title='Interventies'>
-                {formData.plan.interventions.map((item) => (
-                  <div
-                    key={item.id}
-                    className='flex items-center gap-3 mt-2 w-full'
-                  >
-                    <Editable
-                      name='intervention'
-                      value={item.description}
-                      onChange={(event) =>
-                        handleInterventionChange(item.id, event.target.value)
-                      }
-                    />
-
-                    <Button
-                      onClick={() => removeIntervention(item.id)}
-                      type='button'
-                      className='p-2 bg-red-500 text-white hover:scale-125 transition-transform duration-150 cursor-pointer'
-                    >
-                      <span>
-                        <MdDeleteOutline size={23} />
-                      </span>
-                    </Button>
-                  </div>
-                ))}
-
-                <Button
-                  onClick={addIntervention}
-                  className='cursor-pointer bg-blue-500 text-primary mt-4 ml-1 p-2 text-white hover:scale-125 transition duration-300'
-                  type={'button'}
-                >
-                  <span>
-                    <MdOutlineAddCircle size={25} />
-                  </span>
-                </Button>
-              </Section>
-
-              <Section title='Evaluatie'>
-                <Editable
-                  onChange={(event) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      plan: { ...prev.plan, evaluation: event.target.value },
-                    }));
-                  }}
-                  name={'evaluation'}
-                  value={formData.plan.evaluation}
-                />
-              </Section>
-
-              <div className='fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex gap-2'>
-                <Button
-                  onClick={() => generateClientPlan(true)}
-                  className='flex-1 bg-gray-500 p-3 rounded-xl text-white cursor-pointer'
-                  type={'button'}
-                >
-                  Opnieuw
-                </Button>
-                <Button
-                  type={'submit'}
-                  className='cursor-pointer bg-green-600 text-primary text-white'
-                >
-                  Goedkeuren
-                </Button>
-              </div>
-            </form>
+            <ClientForm
+              updateFormData={updateFormData}
+              formData={formData}
+              handleSubmit={handleSubmit}
+              generateClientPlan={generateClientPlan}
+            />
           </div>
         )}
       </>
-    </div>
+    </>
   );
 }
