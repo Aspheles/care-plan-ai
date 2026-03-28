@@ -1,9 +1,9 @@
-import Section from '../components/Section';
-import Editable from '../components/Editable';
+import Section from '../components/ui/Section';
+import Editable from '../components/ui/Editable';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useClientData from '../hooks/useClientData';
-import Loading from '../components/ui/Loading';
+import Loading from '../components/ui/LoadingState';
 import type { Client } from '../types/interface';
 import Button from '../components/ui/Button';
 
@@ -37,12 +37,12 @@ export default function GeneratePage() {
   return (
     <div className='min-h-screen bg-gray-50 p-4'>
       <div className='mx-auto'>
-        <button
+        <Button
           onClick={() => navigate('/dashboard')}
           className='mb-4 text-blue-600 cursor-pointer hover:underline'
         >
           ← Terug
-        </button>
+        </Button>
 
         <h1 className='text-2xl font-bold'>Zorgplan</h1>
         <p className='text-sm text-gray-500'>

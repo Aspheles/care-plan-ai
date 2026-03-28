@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import Editable from '../components/Editable';
+import Editable from '../components/ui/Editable';
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('Admin');
+  const [password, setPassword] = useState('Admin');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
