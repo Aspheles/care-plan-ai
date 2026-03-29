@@ -22,3 +22,13 @@ export interface FormData {
   name: string;
   plan: Plan;
 }
+
+export interface Error {
+  state: boolean;
+  text: string;
+}
+
+export interface FormLoginData {
+  username: string;
+  password: string;
+}
