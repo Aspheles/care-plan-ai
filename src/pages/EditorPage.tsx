@@ -34,7 +34,7 @@ export function Editor({ onBack, client }: EditorProps) {
     });
 
     setLoadingText(
-      client.plan
+      client.plan && !newFetch
         ? 'Zorgplan wordt opgehaald...'
         : 'Zorgplan wordt opgesteld...',
     );
