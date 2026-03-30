@@ -1,6 +1,6 @@
 interface editbaleProps {
   placeholder?: string;
-  value: string;
+  value?: string;
   className?: string;
   type?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
