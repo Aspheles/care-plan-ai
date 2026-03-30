@@ -45,7 +45,6 @@ const ClientCreateForm = ({ handleSubmit, error }: ClientCreateFormProps) => {
           <label className='text-sm text-gray-500'>Geboortedatum</label>
           <Editable
             name='birthdate'
-            value=''
             type='date'
             className='w-full border border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
