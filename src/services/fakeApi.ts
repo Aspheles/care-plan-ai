@@ -11,7 +11,7 @@ export const generateCarePlan = async () => {
         ],
         evaluation: 'Wekelijkse check',
       });
-    }, 1500);
+    }, 100);
   });
 };
 
@@ -25,6 +25,6 @@ export const generateFakeClients = async () => {
         { id: 4, name: 'Mevrouw Amber', status: 'Goedgekeurd', plan: null },
         { id: 5, name: 'Dhr. Dereli', status: 'Goedgekeurd', plan: null },
       ]);
-    }, 500);
+    }, 1500);
   });
 };

@@ -12,7 +12,7 @@ interface EditorProps {
 }
 
 export function Editor({ onBack, client }: EditorProps) {
-  const { plan, isLoading } = usePlanData();
+  const { plan, isLoading, isFetching } = usePlanData();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingText, setLoadingText] = useState<string>('');
 
@@ -92,12 +92,12 @@ export function Editor({ onBack, client }: EditorProps) {
         AI voorstel — controleer en pas aan
       </p>
 
-      {!formData.name && !loading && (
+      {!formData.name && !loading && !isFetching && (
         <div className=''>
           <Button
             type={'button'}
             className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg cursor-pointer'
-            onClick={() => generateClientPlan()}
+            onClick={generateClientPlan}
           >
             Genereer zorgplan
           </Button>
@@ -111,7 +111,7 @@ export function Editor({ onBack, client }: EditorProps) {
           </div>
         )}
 
-        {formData.name && !isLoading && !loading && (
+        {formData.name && !isLoading && !loading && !isFetching && (
           <div className='space-y-4'>
             <ClientForm
               updateFormData={updateFormData}
