@@ -15,10 +15,10 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle }) => {
 
   return (
     <header className='w-full'>
-      <div className='max-w-full px-4 sm:px-6 lg:px-8 py-4'>
-        <div className='flex justify-between'>
+      <div className='max-w-full py-2'>
+        <div className='flex justify-between items-center'>
           <div className='flex items-start '>
-            <img src={logo} className='w-18 mr-2' />
+            <img src={logo} className='w-18 mr-1' />
             <div>
               <h1 className='text-2xl font-bold text-gray-900'>{title}</h1>
               {subtitle && (
@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle }) => {
           </div>
 
           {location.pathname.includes('dashboard') && (
-            <div className='flex'>
+            <div className='flex items-end'>
               <Button
                 onClick={() => navigate('/')}
                 className='flex items-center gap-2 text-black p-3 rounded-xl  transition cursor-pointer hover:text-blue-600'

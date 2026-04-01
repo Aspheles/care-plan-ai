@@ -53,7 +53,7 @@ const ClientForm = ({
         />
       </Section>
 
-      <div className='fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex gap-2'>
+      <div className='bg-white p-4 border-t flex gap-2'>
         <Button
           onClick={() => generateClientPlan(true)}
           className='flex-1 bg-gray-500 p-3 rounded-xl text-white cursor-pointer hover:bg-gray-400'
