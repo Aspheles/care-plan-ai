@@ -28,7 +28,7 @@ export default function Dashboard() {
   return (
     <>
       <Link to={'/generate-page'}>
-        <Button className='w-full bg-blue-600 text-white p-4 text-lg mb-4 cursor-pointer hover:bg-blue-500'>
+        <Button className='w-full bg-blue-600 text-white p-4 text-lg mb-4 hover:bg-blue-500'>
           <span className='flex justify-center items-center'>
             <IoMdPersonAdd size={30} className='mr-2' /> Nieuw Client
           </span>

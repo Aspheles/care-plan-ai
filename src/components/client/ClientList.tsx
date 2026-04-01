@@ -16,7 +16,7 @@ export const ClientList = ({
         <div
           key={client.id}
           onClick={() => updateSelectedClient(client)}
-          className='bg-white p-4 rounded-2xl shadow cursor-pointer hover:shadow-md transition'
+          className='bg-white p-4 rounded-2xl shadow hover:shadow-md transition'
         >
           <ClientCard {...client} />
         </div>

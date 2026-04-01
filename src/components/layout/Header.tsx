@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle }) => {
             <div className='flex items-end'>
               <Button
                 onClick={() => navigate('/')}
-                className='flex items-center gap-2 text-black p-3 rounded-xl  transition cursor-pointer hover:text-blue-600'
+                className='flex items-center gap-2 text-black p-3 rounded-xl  transition hover:text-blue-600'
               >
                 <IoMdLogOut size={20} />
                 Uitloggen

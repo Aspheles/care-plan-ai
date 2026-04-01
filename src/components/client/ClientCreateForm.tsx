@@ -53,7 +53,7 @@ const ClientCreateForm = ({ handleSubmit, error }: ClientCreateFormProps) => {
 
       <Button
         type={'submit'}
-        className='w-full bg-blue-600 text-white p-4 mt-4 rounded-2xl text-lg cursor-pointer hover:bg-blue-500 transition'
+        className='w-full bg-blue-600 text-white p-4 mt-4 rounded-2xl text-lg hover:bg-blue-500 transition'
       >
         Opslaan
       </Button>

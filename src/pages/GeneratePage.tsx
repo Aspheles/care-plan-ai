@@ -40,7 +40,7 @@ export default function GeneratePage() {
       <div className='mx-auto'>
         <Button
           onClick={() => navigate('/dashboard')}
-          className='mb-4 text-blue-600 cursor-pointer hover:underline'
+          className='mb-4 text-blue-600 hover:underline'
         >
           ← Terug
         </Button>

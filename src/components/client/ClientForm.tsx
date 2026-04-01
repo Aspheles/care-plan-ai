@@ -56,14 +56,14 @@ const ClientForm = ({
       <div className='bg-white p-4 border-t flex gap-2'>
         <Button
           onClick={() => generateClientPlan(true)}
-          className='flex-1 bg-gray-500 p-3 rounded-xl text-white cursor-pointer hover:bg-gray-400'
+          className='flex-1 bg-gray-500 p-3 rounded-xl text-white hover:bg-gray-400'
           type='button'
         >
           Opnieuw
         </Button>
         <Button
           type='submit'
-          className='cursor-pointer bg-green-600 text-white hover:bg-green-500'
+          className='bg-green-600 text-white hover:bg-green-500'
         >
           Goedkeuren
         </Button>

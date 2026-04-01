@@ -53,7 +53,7 @@ const LoginForm = ({ handleLogin, error }: LoginFormProps) => {
 
       <Button
         type='submit'
-        className='w-full bg-blue-600 text-white p-3 rounded-xl cursor-pointer'
+        className='w-full bg-blue-600 text-white p-3 rounded-xl'
       >
         Inloggen
       </Button>

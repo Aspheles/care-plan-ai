@@ -47,7 +47,7 @@ const InterventionsField = ({
           <Button
             onClick={() => removeIntervention(item.id)}
             type='button'
-            className='p-2 bg-red-500 text-white hover:scale-125 transition-transform duration-150 cursor-pointer'
+            className='p-2 bg-red-500 text-white hover:scale-125 transition-transform duration-150'
           >
             <MdDeleteOutline size={23} />
           </Button>
@@ -56,7 +56,7 @@ const InterventionsField = ({
 
       <Button
         onClick={addIntervention}
-        className='cursor-pointer bg-blue-500 mt-4 ml-1 p-2 text-white hover:scale-125 transition duration-300'
+        className='bg-blue-500 mt-4 ml-1 p-2 text-white hover:scale-125 transition duration-300'
         type='button'
       >
         <MdOutlineAddCircle size={25} />

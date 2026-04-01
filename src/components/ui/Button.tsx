@@ -16,7 +16,7 @@ const Button = ({
   return (
     <button
       disabled={disabled}
-      className={`flex-1 rounded-xl ${className}`}
+      className={`flex-1 rounded-xl cursor-pointer ${className}`}
       onClick={onClick}
       type={type}
     >

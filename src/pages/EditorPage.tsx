@@ -82,7 +82,7 @@ export function Editor({ onBack, client }: EditorProps) {
           onBack();
           setFormData((prev) => ({ ...prev, name: '' }));
         }}
-        className='mb-4 text-blue-600 cursor-pointer'
+        className='mb-4 text-blue-600'
       >
         ← Terug
       </Button>
@@ -96,7 +96,7 @@ export function Editor({ onBack, client }: EditorProps) {
         <div className=''>
           <Button
             type={'button'}
-            className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg cursor-pointer'
+            className='w-full bg-blue-600 text-white p-4 rounded-2xl text-lg'
             onClick={generateClientPlan}
           >
             Genereer zorgplan
