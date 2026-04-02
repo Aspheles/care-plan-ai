@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# Zorgplannen AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Over het project
 
-Currently, two official plugins are available:
+Zorgplannen AI is een eenvoudige frontend applicatie die gebruikmaakt van kunstmatige intelligentie om een basis zorgplan te genereren op basis van ingevoerde gegevens.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Deze applicatie is ontwikkeld als assessment en richt zich op het tonen van frontend vaardigheden, gebruikersinteractie en het integreren van een AI-functionaliteit.
 
-## React Compiler
+Het project is bewust simpel gehouden en is geen volledige productieklare applicatie.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Doel
 
-## Expanding the ESLint configuration
+Het doel van deze applicatie is om te demonstreren hoe een gebruiker op een toegankelijke manier gegevens kan invoeren en op basis daarvan automatisch een zorgplan kan laten genereren, dat vervolgens door een professional kan worden beoordeeld en waar nodig aangepast.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Functionaliteiten
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Invoeren van gegevens via een formulier
+- Genereren van een zorgplan met behulp van een Api
+- Tonen van het gegenereerde resultaat in de interface
+- Eenvoudige en overzichtelijke gebruikerservaring
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Technologieën
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Dit project is gebouwd met de volgende technologieën:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- React
+- TypeScript
+- TailwindCSS
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Installatie
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Voer de volgende stappen uit om het project lokaal te starten:
+
+```bash
+git clone https://github.com/jouw-gebruikersnaam/care-plan-ai.git
+cd care-plan-ai
+npm install
+npm run dev
 ```
