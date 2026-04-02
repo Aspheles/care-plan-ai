@@ -36,31 +36,26 @@ export default function GeneratePage() {
   };
 
   return (
-    <div className='min-h-screen bg-gray-50 p-4'>
-      <div className='mx-auto'>
-        <Button
-          onClick={() => navigate('/dashboard')}
-          className='mb-4 text-blue-600 hover:underline'
-        >
-          ← Terug
-        </Button>
+    <div>
+      <Button
+        onClick={() => navigate('/dashboard')}
+        className='mb-4 text-blue-600 hover:underline'
+      >
+        ← Terug
+      </Button>
 
-        <h1 className='text-2xl font-bold'>Zorgplan</h1>
-        <p className='text-sm text-gray-500'>
-          Beheer cliëntgegevens en zorginformatie
-        </p>
+      <h1 className='text-2xl font-bold'>Zorgplan</h1>
+      <p className='text-sm text-gray-500'>
+        Beheer cliëntgegevens en zorginformatie
+      </p>
 
-        <div className='bg-white rounded-2xl shadow-sm'>
-          {!isSaving && (
-            <ClientCreateForm handleSubmit={handleSubmit} error={error} />
-          )}
+      {!isSaving ? (
+        <ClientCreateForm handleSubmit={handleSubmit} error={error} />
+      ) : (
+        <div className='py-10'>
+          <Loading text='Client wordt opgeslagen...' />
         </div>
-        {isSaving && (
-          <div className='py-10'>
-            <Loading text='Client wordt opgeslagen...' />
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }
